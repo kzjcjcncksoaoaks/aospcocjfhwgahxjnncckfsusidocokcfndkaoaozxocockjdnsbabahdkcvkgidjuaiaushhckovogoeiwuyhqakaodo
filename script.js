@@ -4,27 +4,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     tg.expand();
     tg.ready();
     
-    // Настройка цветов системного хедера
-    tg.setHeaderColor(getComputedStyle(document.body).getPropertyValue('--bg-dark').trim());
-    tg.setBackgroundColor(getComputedStyle(document.body).getPropertyValue('--bg-dark').trim());
-
     // === Переменные ===
     let appData = null;
     let currentLang = localStorage.getItem('blockman_lang') || 'ru';
-    let isDark = true;
-
-    // === Fallback данные (если json не загрузится локально/ошибка сети) ===
+    let isDark = localStorage.getItem('blockman_theme') === 'dark'; // Запоминаем тему
+    
+    // === Fallback данные (для локального запуска/ошибки сети) ===
     const fallbackData = {
-        links: {
-            google: "https://play.google.com/store/apps/details?id=com.sandboxol.blockymods",
-            apple: "https://apps.apple.com/us/app/blockman-go/id1426189000",
-            rustore: "https://www.rustore.ru",
-            social: {}
-        },
+        links: { social: {} },
         translations: {
-            ru: { hero_title: "Blockman Go", hero_subtitle: "Ошибка загрузки", feat_1_desc: "Пожалуйста, проверьте интернет" },
-            en: { hero_title: "Blockman Go", hero_subtitle: "Load Error", feat_1_desc: "Check internet connection" },
-            zh: { hero_title: "Blockman Go", hero_subtitle: "加载错误", feat_1_desc: "检查互联网" }
+            ru: { loading: "Загрузка...", hero_title: "Blockman Go", feat_1_desc: "Проблема с загрузкой данных." },
+            en: { loading: "Loading...", hero_title: "Blockman Go", feat_1_desc: "Data loading issue." },
+            zh: { loading: "正在加载...", hero_title: "Blockman Go", feat_1_desc: "数据加载问题." }
         }
     };
 
@@ -35,11 +26,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!response.ok) throw new Error('Network response was not ok');
             appData = await response.json();
         } catch (error) {
-            console.warn('Используются резервные данные (CORS или ошибка):', error);
+            console.warn('Используются резервные данные:', error);
             appData = fallbackData;
         }
         
-        // Скрываем лоадер и показываем контент
+        // Применяем начальные настройки
+        applyTheme(isDark, false); 
+        setupLinks();
+
+        // Показываем лоадер с начальным текстом, затем скрываем
+        applyContent(currentLang, true);
         setTimeout(() => {
             document.getElementById('loader').style.opacity = '0';
             setTimeout(() => {
@@ -48,46 +44,50 @@ document.addEventListener('DOMContentLoaded', async () => {
                 app.classList.remove('hidden');
                 app.classList.add('fade-in');
             }, 500);
-        }, 1000); // Имитация загрузки для красоты
-
-        applyContent(currentLang);
-        setupLinks();
+        }, 1000); 
     }
-
-    // === Применение контента ===
-    function applyContent(lang) {
+    
+    // === Применение контента с плавной анимацией ===
+    function applyContent(lang, initialLoad = false) {
         if (!appData || !appData.translations) return;
-        const t = appData.translations[lang] || appData.translations['en'];
         
-        // Маппинг ID элементов к ключам JSON
+        const t = appData.translations[lang] || appData.translations['en'];
+        const elements = document.querySelectorAll('[data-key]');
+        
         const map = {
-            'hero-title': 'hero_title',
-            'hero-subtitle': 'hero_subtitle',
-            'btn-install-text': 'btn_install',
-            'sect-features-title': 'sect_features',
-            'feat-1-title': 'feat_1_title',
-            'feat-1-desc': 'feat_1_desc',
-            'feat-2-title': 'feat_2_title',
-            'feat-2-desc': 'feat_2_desc',
-            'feat-3-title': 'feat_3_title',
-            'feat-3-desc': 'feat_3_desc',
-            'footer-text': 'footer_text',
-            'loader-text': 'loading'
+            'hero_title': 'h1', 'hero_subtitle': 'p', 'desc_intro': 'p',
+            'sect_features': 'h2', 'feat_1_title': 'h3', 'feat_1_desc': 'p',
+            'feat_2_title': 'h3', 'feat_2_desc': 'p', 'feat_3_title': 'h3', 'feat_3_desc': 'p',
+            'feat_4_title': 'h3', 'feat_4_desc': 'p',
+            'sect_discord_title': 'h2', 'sect_discord_desc': 'p',
+            'btn_download': 'span', 'btn_discord': 'span',
+            'footer_text': 'p', 'loading': 'p'
         };
 
-        for (const [id, key] of Object.entries(map)) {
-            const el = document.getElementById(id);
-            if (el && t[key]) {
-                // Анимация смены текста
-                el.style.opacity = 0;
-                setTimeout(() => {
+        elements.forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (t[key]) {
+                if (!initialLoad) {
+                    // 1. Скрываем текст
+                    el.classList.add('text-hidden'); 
+                    
+                    // 2. Меняем текст после задержки
+                    setTimeout(() => {
+                        el.innerText = t[key];
+                        // 3. Показываем текст
+                        el.classList.remove('text-hidden');
+                    }, 200); // Задержка равна времени transition
+                } else {
+                     // При первой загрузке просто ставим текст
                     el.innerText = t[key];
-                    el.style.opacity = 1;
-                }, 200);
+                }
+                el.classList.add('text-transition');
             }
-        }
+        });
         
         document.getElementById('current-lang').innerText = lang.toUpperCase();
+        localStorage.setItem('blockman_lang', lang);
+        document.querySelector('html').lang = lang;
     }
 
     // === Настройка ссылок ===
@@ -95,27 +95,47 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!appData) return;
         const l = appData.links;
         
+        // Установка ссылок магазинов
         document.getElementById('link-google').href = l.google;
         document.getElementById('link-apple').href = l.apple;
         document.getElementById('link-rustore').href = l.rustore;
         
-        // Главная кнопка ведет на Google Play по умолчанию (или можно детектить ОС)
-        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-            document.getElementById('main-download-btn').onclick = () => window.open(l.apple, '_blank');
-        } else {
-            document.getElementById('main-download-btn').onclick = () => window.open(l.google, '_blank');
-        }
+        // Кнопка Discord
+        const discordBtn = document.getElementById('discord-btn');
+        discordBtn.href = l.social.discord;
 
+        // Главная кнопка установки (детектим ОС)
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        const mainLink = (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) ? l.apple : l.google;
+        document.getElementById('main-download-btn').onclick = () => window.open(mainLink, '_blank');
+
+        // Соцсети в футере
         const soc = l.social || {};
-        const socMap = { 'soc-discord': soc.discord, 'soc-youtube': soc.youtube, 'soc-telegram': soc.telegram, 'soc-tiktok': soc.tiktok };
-        
+        const socMap = { 'soc-discord': soc.discord, 'soc-youtube': soc.youtube, 'soc-instagram': soc.instagram, 'soc-telegram': soc.telegram, 'soc-tiktok': soc.tiktok };
         for(const [id, url] of Object.entries(socMap)) {
             const el = document.getElementById(id);
             if(el) {
                 if(url) el.href = url;
-                else el.style.display = 'none';
+                else el.style.display = 'none'; // Скрываем, если ссылки нет
             }
+        }
+    }
+
+    // === Управление Темой ===
+    function applyTheme(dark, animate = true) {
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        document.getElementById('theme-btn').innerHTML = dark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+        localStorage.setItem('blockman_theme', dark ? 'dark' : 'light');
+
+        // Обновляем цвета Telegram (для плавности используем transition)
+        const color = dark ? '#0f1014' : '#f0f2f5';
+        if (animate) {
+             // TG API не поддерживает transition, но мы можем его вызвать
+             tg.setHeaderColor(color);
+             tg.setBackgroundColor(color);
+        } else {
+             tg.setHeaderColor(color);
+             tg.setBackgroundColor(color);
         }
     }
 
@@ -124,9 +144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Смена языка
     document.querySelectorAll('.lang-dropdown div').forEach(item => {
         item.addEventListener('click', () => {
-            currentLang = item.getAttribute('data-lang');
-            localStorage.setItem('blockman_lang', currentLang);
-            applyContent(currentLang);
+            applyContent(item.getAttribute('data-lang'), false);
             haptic();
         });
     });
@@ -134,13 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Смена темы
     document.getElementById('theme-btn').addEventListener('click', () => {
         isDark = !isDark;
-        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-        document.getElementById('theme-btn').innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
-        
-        // Обновляем цвет хедера Telegram
-        const color = isDark ? '#0f1014' : '#f0f2f5';
-        tg.setHeaderColor(color);
-        tg.setBackgroundColor(color);
+        applyTheme(isDark, true);
         haptic();
     });
 
@@ -206,7 +218,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         requestAnimationFrame(animateParticles);
     }
 
-    // Запуск
+    // Запуск приложения
     initParticles();
     animateParticles();
     loadData();
