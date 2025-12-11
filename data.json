@@ -1,6 +1,6 @@
 {
   "config": {
-    "version": "2.0.0",
+    "version": "3.0.0",
     "theme_color": "#FFC107"
   },
   "links": {
@@ -10,6 +10,7 @@
     "social": {
       "discord": "https://discord.gg/blockmango",
       "youtube": "https://youtube.com",
+      "instagram": "https://instagram.com",
       "telegram": "https://t.me/blockmango",
       "tiktok": "https://tiktok.com"
     }
@@ -17,45 +18,81 @@
   "translations": {
     "ru": {
       "hero_title": "BLOCKMAN GO",
-      "hero_subtitle": "ТВОЯ ВСЕЛЕННАЯ — ТВОИ ПРАВИЛА",
-      "btn_install": "УСТАНОВИТЬ ИГРУ",
-      "sect_features": "ОСОБЕННОСТИ",
+      "hero_subtitle": "Авангардная ролевая платформа",
+      "desc_intro": "Добро пожаловать в Blockman Go! Это бесплатное приложение, Вы можете отправиться на любую мини-игру вместе со своими друзьями абсолютно бесплатно!",
+      
+      "sect_features": "ОСНОВНЫЕ ФУНКЦИИ",
+      
       "feat_1_title": "Мини-игры",
-      "feat_1_desc": "Бедварс, Скайблок и сотни других режимов в одном клике.",
-      "feat_2_title": "4D Скины",
-      "feat_2_desc": "Вырази себя через миллионы комбинаций одежды.",
-      "feat_3_title": "Социализация",
-      "feat_3_desc": "Чат, гильдии и голосовое общение с друзьями.",
-      "footer_text": "Официальные сообщества",
-      "loading": "Загрузка ресурсов..."
+      "feat_1_desc": "Красивые текстуры, огромные карты, множество различных игр и многое другое ждут вас!",
+      
+      "feat_2_title": "Индивидуальные скины",
+      "feat_2_desc": "Система украшения 4D скинов представляет игроку большое количество украшений различных стилей. Спешите присоединиться к этому празднику моды, и станьте звездой!",
+      
+      "feat_3_title": "Система чата",
+      "feat_3_desc": "Blockman Go предоставляет игрокам функцию чата. Вы можете отправить сообщение другу, также создать группу. Сформировать команду и поделиться своим игровым опытом!",
+      
+      "feat_4_title": "Украшения для разных полов",
+      "feat_4_desc": "После создании аккаунта, система будет предоставлять различные украшения согласно выбранного пола!",
+      
+      "sect_discord_title": "Наш Discord-сервер",
+      "sect_discord_desc": "Мы также создали наш основной игровой сайт на Discord, на котором будет публиковаться различная захватывающая информация о внутриигровых событиях; Присоединяйтесь к нам и найдите наш основной сайт на DC: Blockman Go",
+      
+      "btn_download": "УСТАНОВИТЬ BLOCKMAN GO",
+      "btn_discord": "ПЕРЕЙТИ В DISCORD",
+      "footer_text": "Официальные социальные сети"
     },
     "en": {
       "hero_title": "BLOCKMAN GO",
-      "hero_subtitle": "YOUR UNIVERSE — YOUR RULES",
-      "btn_install": "INSTALL NOW",
-      "sect_features": "FEATURES",
-      "feat_1_title": "Mini-Games",
-      "feat_1_desc": "Bedwars, Skyblock and hundreds of modes just a click away.",
-      "feat_2_title": "4D Skins",
-      "feat_2_desc": "Express yourself through millions of outfit combos.",
-      "feat_3_title": "Socialize",
-      "feat_3_desc": "Chat, guilds and voice comms with friends.",
-      "footer_text": "Official Communities",
-      "loading": "Loading assets..."
+      "hero_subtitle": "Avant-garde Role-playing Platform",
+      "desc_intro": "Welcome to Blockman Go! A free app, you can go to any mini-game with your friends absolutely free!",
+      
+      "sect_features": "KEY FEATURES",
+      
+      "feat_1_title": "Mini Games",
+      "feat_1_desc": "Beautiful textures, huge maps, many different games and much more await you!",
+      
+      "feat_2_title": "Custom Skins",
+      "feat_2_desc": "The 4D skin decoration system presents the player with a large number of decorations of various styles. Hurry up and join this fashion celebration and become a star now!",
+      
+      "feat_3_title": "Chat System",
+      "feat_3_desc": "Blockman Go provides players with a chat function. You can send a message to a friend, or create a group. Form a team and share your gaming experience!",
+      
+      "feat_4_title": "Gender-Specific Decorations",
+      "feat_4_desc": "After creating an account, the system will provide different decorations according to the chosen gender!",
+      
+      "sect_discord_title": "Our Discord Server",
+      "sect_discord_desc": "We also created our main gaming site on DC, where various exciting information about in-game events will be published; Join us and find our main site on DC: Blockman Go",
+      
+      "btn_download": "INSTALL BLOCKMAN GO",
+      "btn_discord": "GO TO DISCORD",
+      "footer_text": "Official Social Media"
     },
     "zh": {
       "hero_title": "BLOCKMAN GO",
-      "hero_subtitle": "你的宇宙 — 你的规则",
-      "btn_install": "立即安装",
-      "sect_features": "游戏特色",
+      "hero_subtitle": "前卫的角色扮演平台",
+      "desc_intro": "欢迎来到 Blockman Go！这是一个免费的应用程序，您可以和朋友一起免费玩任何迷你游戏！",
+      
+      "sect_features": "核心功能",
+      
       "feat_1_title": "迷你游戏",
-      "feat_1_desc": "起床战争，空岛战争等数百种模式。",
-      "feat_2_title": "4D 皮肤",
-      "feat_2_desc": "通过数百万种服装组合表达自己。",
-      "feat_3_title": "社交互动",
-      "feat_3_desc": "聊天，公会以及与朋友的语音交流。",
-      "footer_text": "官方社区",
-      "loading": "正在加载..."
+      "feat_1_desc": "精美的纹理，巨大的地图和各种游戏等着你！",
+      
+      "feat_2_title": "个性化皮肤",
+      "feat_2_desc": "4D皮肤装饰系统：提供大量的装饰品，快来加入这个时尚派对，成为明星吧！",
+      
+      "feat_3_title": "聊天系统",
+      "feat_3_desc": "Blockman Go 提供聊天功能。您可以发送消息给朋友，创建群组，组建团队并分享您的游戏体验！",
+      
+      "feat_4_title": "性别装饰",
+      "feat_4_desc": "创建帐户后，系统将根据所选性别提供不同的装饰！",
+      
+      "sect_discord_title": "我们的 Discord 服务器",
+      "sect_discord_desc": "我们还在 Discord 上创建了我们的主要游戏网站，将在其中发布有关游戏内活动的各种激动人心的信息；加入我们并在 DC 上找到我们的主要网站：Blockman Go",
+      
+      "btn_download": "安装 BLOCKMAN GO",
+      "btn_discord": "前往 DISCORD",
+      "footer_text": "官方社区"
     }
   }
 }
