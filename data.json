@@ -1,0 +1,61 @@
+{
+  "config": {
+    "version": "2.0.0",
+    "theme_color": "#FFC107"
+  },
+  "links": {
+    "google": "https://play.google.com/store/apps/details?id=com.sandboxol.blockymods",
+    "apple": "https://apps.apple.com/us/app/blockman-go/id1426189000",
+    "rustore": "https://www.rustore.ru/catalog/app/com.sandboxol.blockymods.official",
+    "social": {
+      "discord": "https://discord.gg/blockmango",
+      "youtube": "https://youtube.com",
+      "telegram": "https://t.me/blockmango",
+      "tiktok": "https://tiktok.com"
+    }
+  },
+  "translations": {
+    "ru": {
+      "hero_title": "BLOCKMAN GO",
+      "hero_subtitle": "ТВОЯ ВСЕЛЕННАЯ — ТВОИ ПРАВИЛА",
+      "btn_install": "УСТАНОВИТЬ ИГРУ",
+      "sect_features": "ОСОБЕННОСТИ",
+      "feat_1_title": "Мини-игры",
+      "feat_1_desc": "Бедварс, Скайблок и сотни других режимов в одном клике.",
+      "feat_2_title": "4D Скины",
+      "feat_2_desc": "Вырази себя через миллионы комбинаций одежды.",
+      "feat_3_title": "Социализация",
+      "feat_3_desc": "Чат, гильдии и голосовое общение с друзьями.",
+      "footer_text": "Официальные сообщества",
+      "loading": "Загрузка ресурсов..."
+    },
+    "en": {
+      "hero_title": "BLOCKMAN GO",
+      "hero_subtitle": "YOUR UNIVERSE — YOUR RULES",
+      "btn_install": "INSTALL NOW",
+      "sect_features": "FEATURES",
+      "feat_1_title": "Mini-Games",
+      "feat_1_desc": "Bedwars, Skyblock and hundreds of modes just a click away.",
+      "feat_2_title": "4D Skins",
+      "feat_2_desc": "Express yourself through millions of outfit combos.",
+      "feat_3_title": "Socialize",
+      "feat_3_desc": "Chat, guilds and voice comms with friends.",
+      "footer_text": "Official Communities",
+      "loading": "Loading assets..."
+    },
+    "zh": {
+      "hero_title": "BLOCKMAN GO",
+      "hero_subtitle": "你的宇宙 — 你的规则",
+      "btn_install": "立即安装",
+      "sect_features": "游戏特色",
+      "feat_1_title": "迷你游戏",
+      "feat_1_desc": "起床战争，空岛战争等数百种模式。",
+      "feat_2_title": "4D 皮肤",
+      "feat_2_desc": "通过数百万种服装组合表达自己。",
+      "feat_3_title": "社交互动",
+      "feat_3_desc": "聊天，公会以及与朋友的语音交流。",
+      "footer_text": "官方社区",
+      "loading": "正在加载..."
+    }
+  }
+}
