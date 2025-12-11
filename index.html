@@ -7,17 +7,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
+    
     <div class="noise-overlay"></div>
 
     <div id="loader" class="loader-screen">
         <div class="spinner"></div>
-        <p id="loader-text" data-key="loading">Загрузка ресурсов...</p>
+        <p id="loader-text">Loading Universe...</p>
     </div>
 
     <main id="app" class="app-content hidden">
@@ -28,7 +30,7 @@
                 <span>BMGO</span>
             </div>
             <div class="nav-controls">
-                <button id="theme-btn" class="nav-btn" title="Сменить тему"><i class="fa-solid fa-moon"></i></button>
+                <button id="theme-btn" class="nav-btn"><i class="fa-solid fa-moon"></i></button>
                 <div class="lang-switcher">
                     <span class="active-lang" id="current-lang">RU</span>
                     <div class="lang-dropdown">
@@ -43,78 +45,60 @@
         <header class="hero">
             <div class="hero-content">
                 <div class="hero-image-wrapper">
-                    <img src="1.png" alt="Blockman Go Art" class="hero-img">
+                    <img src="1.png" alt="Blockman Art" class="hero-img">
                     <div class="glitch-effect"></div>
                 </div>
-                <h1 id="hero-title" class="glitch-text" data-key="hero_title">BLOCKMAN GO</h1>
-                <p id="hero-subtitle" data-key="hero_subtitle">Loading...</p>
-                <p id="desc-intro" class="description" data-key="desc_intro">Loading...</p>
+                <h1 id="hero-title" class="glitch-text" data-text="BLOCKMAN GO">BLOCKMAN GO</h1>
+                <p id="hero-subtitle">SANDBOX RPG PLATFORM</p>
             </div>
         </header>
 
         <div class="install-bar">
             <button id="main-download-btn" class="cta-button">
-                <i class="fa-solid fa-download"></i> <span id="btn-install-text" data-key="btn_download">УСТАНОВИТЬ BLOCKMAN GO</span>
+                <i class="fa-solid fa-download"></i> <span id="btn-install-text">INSTALL</span>
             </button>
             <div class="store-links">
-                <a href="#" id="link-google" class="mini-store" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
-                <a href="#" id="link-apple" class="mini-store" title="App Store"><i class="fa-brands fa-apple"></i></a>
-                <a href="#" id="link-rustore" class="mini-store rustore-icon" title="RuStore">Ru</a>
+                <a href="#" id="link-google" class="mini-store"><i class="fa-brands fa-google-play"></i></a>
+                <a href="#" id="link-apple" class="mini-store"><i class="fa-brands fa-apple"></i></a>
+                <a href="#" id="link-rustore" class="mini-store rustore-icon">Ru</a>
             </div>
         </div>
 
         <section class="features-grid">
-            <h2 id="sect-features-title" data-key="sect_features">ОСНОВНЫЕ ФУНКЦИИ</h2>
+            <h2 id="sect-features-title">FEATURES</h2>
             
             <div class="feature-card tilt-card">
                 <div class="icon-box"><i class="fa-solid fa-gamepad"></i></div>
                 <div class="text-box">
-                    <h3 id="feat-1-title" data-key="feat_1_title">Мини-игры</h3>
-                    <p id="feat-1-desc" data-key="feat_1_desc">Loading...</p>
+                    <h3 id="feat-1-title">Minigames</h3>
+                    <p id="feat-1-desc">Loading...</p>
                 </div>
             </div>
 
             <div class="feature-card tilt-card">
                 <div class="icon-box"><i class="fa-solid fa-shirt"></i></div>
                 <div class="text-box">
-                    <h3 id="feat-2-title" data-key="feat_2_title">Индивидуальные скины</h3>
-                    <p id="feat-2-desc" data-key="feat_2_desc">Loading...</p>
+                    <h3 id="feat-2-title">Skins</h3>
+                    <p id="feat-2-desc">Loading...</p>
                 </div>
             </div>
 
             <div class="feature-card tilt-card">
-                <div class="icon-box"><i class="fa-solid fa-comments"></i></div>
+                <div class="icon-box"><i class="fa-solid fa-users"></i></div>
                 <div class="text-box">
-                    <h3 id="feat-3-title" data-key="feat_3_title">Система чата</h3>
-                    <p id="feat-3-desc" data-key="feat_3_desc">Loading...</p>
+                    <h3 id="feat-3-title">Social</h3>
+                    <p id="feat-3-desc">Loading...</p>
                 </div>
             </div>
-
-            <div class="feature-card tilt-card">
-                <div class="icon-box"><i class="fa-solid fa-venus-mars"></i></div>
-                <div class="text-box">
-                    <h3 id="feat-4-title" data-key="feat_4_title">Украшения для разных полов</h3>
-                    <p id="feat-4-desc" data-key="feat_4_desc">Loading...</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="discord-promo">
-            <h2 id="sect-discord-title" data-key="sect_discord_title"><i class="fa-brands fa-discord"></i> Наш Discord-сервер</h2>
-            <p id="sect-discord-desc" data-key="sect_discord_desc">Loading...</p>
-            <a href="#" id="discord-btn" class="cta-button small-cta" data-key="btn_discord">
-                 <i class="fa-brands fa-discord"></i> <span id="btn-discord-text">ПЕРЕЙТИ В DISCORD</span>
-            </a>
         </section>
 
         <footer class="glass-footer">
-            <p id="footer-text" data-key="footer_text">Официальные социальные сети</p>
+            <p id="footer-text">Community</p>
             <div class="social-row">
-                <a href="#" id="soc-discord" title="Discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="#" id="soc-youtube" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#" id="soc-instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" id="soc-telegram" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
-                <a href="#" id="soc-tiktok" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" id="soc-discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" id="soc-youtube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" id="soc-telegram"><i class="fa-brands fa-telegram"></i></a>
+                <a href="#" id="soc-tiktok"><i class="fa-brands fa-tiktok"></i></a>
             </div>
         </footer>
     </main>
