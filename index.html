@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Blockman Go Promo</title>
+    <title>Blockman Go</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-view="mobile">
-    <canvas id="shader-canvas"></canvas>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    
     <div class="noise-overlay"></div>
 
     <div id="loader" class="loader-screen">
-        <div class="skeleton-logo"></div>
-        <p id="loader-text" data-key="loading">Загрузка...</p>
+        <div class="spinner"></div>
+        <p id="loader-text">Loading Universe...</p>
     </div>
 
     <main id="app" class="app-content hidden">
@@ -26,7 +30,6 @@
                 <span>BMGO</span>
             </div>
             <div class="nav-controls">
-                <button id="pc-mode-btn" class="nav-btn"><i class="fa-solid fa-desktop"></i> <span class="pc-text" data-key="btn_pc_mode">ПК-Режим</span></button>
                 <button id="theme-btn" class="nav-btn"><i class="fa-solid fa-moon"></i></button>
                 <div class="lang-switcher">
                     <span class="active-lang" id="current-lang">RU</span>
@@ -43,18 +46,16 @@
             <div class="hero-content">
                 <div class="hero-image-wrapper">
                     <img src="https://via.placeholder.com/600x350/FFC107/000000?text=Blockman+Go" alt="Blockman Art" class="hero-img">
+                    <div class="glitch-effect"></div>
                 </div>
-                <h1 id="hero-title" class="glitch-text text-fade" data-key="hero_title">BLOCKMAN GO</h1>
-                <p id="hero-platform" class="text-fade" data-key="hero_platform">АВАНГАРДНАЯ ПЛАТФОРМА</p>
-                
-                <p id="desc-intro" class="description text-fade" data-key="desc_intro"></p>
-                <p id="desc-discord" class="description discord-callout text-fade" data-key="desc_discord"></p>
+                <h1 id="hero-title" class="glitch-text" data-text="BLOCKMAN GO">BLOCKMAN GO</h1>
+                <p id="hero-subtitle">SANDBOX RPG PLATFORM</p>
             </div>
         </header>
 
         <div class="install-bar">
-            <button id="main-download-btn" class="cta-button pulse">
-                <i class="fa-solid fa-download"></i> <span id="btn-install-text" data-key="btn_install">СКАЧАТЬ</span>
+            <button id="main-download-btn" class="cta-button">
+                <i class="fa-solid fa-download"></i> <span id="btn-install-text">INSTALL</span>
             </button>
             <div class="store-links">
                 <a href="#" id="link-google" class="mini-store"><i class="fa-brands fa-google-play"></i></a>
@@ -64,113 +65,43 @@
         </div>
 
         <section class="features-grid">
-            <h2 id="sect-features-title" class="section-title text-fade" data-key="sect_features">ОСНОВНЫЕ ФУНКЦИИ</h2>
+            <h2 id="sect-features-title">FEATURES</h2>
             
             <div class="feature-card tilt-card">
                 <div class="icon-box"><i class="fa-solid fa-gamepad"></i></div>
                 <div class="text-box">
-                    <h3 id="feat-1-title" class="text-fade" data-key="feat_1_title"></h3>
-                    <p id="feat-1-desc" class="text-fade" data-key="feat_1_desc"></p>
+                    <h3 id="feat-1-title">Minigames</h3>
+                    <p id="feat-1-desc">Loading...</p>
                 </div>
             </div>
 
             <div class="feature-card tilt-card">
                 <div class="icon-box"><i class="fa-solid fa-shirt"></i></div>
                 <div class="text-box">
-                    <h3 id="feat-2-title" class="text-fade" data-key="feat_2_title"></h3>
-                    <p id="feat-2-desc" class="text-fade" data-key="feat_2_desc"></p>
+                    <h3 id="feat-2-title">Skins</h3>
+                    <p id="feat-2-desc">Loading...</p>
                 </div>
             </div>
 
             <div class="feature-card tilt-card">
-                <div class="icon-box"><i class="fa-solid fa-comments"></i></div>
+                <div class="icon-box"><i class="fa-solid fa-users"></i></div>
                 <div class="text-box">
-                    <h3 id="feat-3-title" class="text-fade" data-key="feat_3_title"></h3>
-                    <p id="feat-3-desc" class="text-fade" data-key="feat_3_desc"></p>
-                </div>
-            </div>
-
-            <div class="feature-card tilt-card">
-                <div class="icon-box"><i class="fa-solid fa-venus-mars"></i></div>
-                <div class="text-box">
-                    <h3 id="feat-4-title" class="text-fade" data-key="feat_4_title"></h3>
-                    <p id="feat-4-desc" class="text-fade" data-key="feat_4_desc"></p>
+                    <h3 id="feat-3-title">Social</h3>
+                    <p id="feat-3-desc">Loading...</p>
                 </div>
             </div>
         </section>
 
         <footer class="glass-footer">
-            <p id="footer-text" class="text-fade" data-key="footer_text">Сообщества</p>
+            <p id="footer-text">Community</p>
             <div class="social-row">
                 <a href="#" id="soc-discord"><i class="fa-brands fa-discord"></i></a>
                 <a href="#" id="soc-youtube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#" id="soc-instagram"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#" id="soc-telegram"><i class="fa-brands fa-telegram"></i></a>
                 <a href="#" id="soc-tiktok"><i class="fa-brands fa-tiktok"></i></a>
             </div>
         </footer>
     </main>
-
-    <div id="discord-notif" class="floating-notification">
-        <span id="notif-text" data-key="notification_discord"></span>
-        <i class="fa-solid fa-xmark close-btn"></i>
-    </div>
-
-    <script id="vertex-shader-2d" type="x-shader/x-vertex">
-        attribute vec2 a_position;
-        void main() {
-            gl_Position = vec4(a_position, 0, 1);
-        }
-    </script>
-    <script id="fragment-shader-2d" type="x-shader/x-fragment">
-        precision highp float;
-        uniform vec2 u_resolution;
-        uniform float u_time;
-        
-        // Funkcja szumu 3D
-        vec3 hash( vec3 p ) {
-            p = fract(p * .3183099 + .1);
-            p *= 17.0;
-            return fract( p.x * p.y * p.z * (p.x + p.y + p.z) );
-        }
-
-        float noise( vec3 p ) {
-            vec3 i = floor( p );
-            vec3 f = fract( p );
-            f = f*f*(3.0-2.0*f);
-            vec3 h = hash( i + vec3(1, 57, 113) );
-            return mix( mix(mix( h.x, h.y, f.x ), mix( h.z, h.w, f.x ), f.y ),
-                        mix( mix( h.x, h.y, f.x ), mix( h.z, h.w, f.x ), f.y ), f.z );
-        }
-
-        void main() {
-            vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-            uv.y *= u_resolution.y / u_resolution.x; // Aspect correction
-
-            vec3 color = vec3(0.0);
-            
-            // Animacja szumu
-            float n = noise(vec3(uv * 5.0, u_time * 0.15));
-            float n2 = noise(vec3(uv * 10.0, u_time * 0.05));
-            
-            // Tworzenie "pól" energetycznych
-            float field = pow(n + n2 * 0.5, 3.0);
-            
-            // Koloryzacja (Blockman Gold Neon)
-            vec3 glow = vec3(1.0, 0.76, 0.0); // Złoto
-            
-            color = field * glow * 1.5;
-            
-            // Winieta i lekkie pociemnienie tła
-            float vignette = 1.0 - length(uv - vec2(0.5, 0.5)) * 1.5;
-            color *= vignette;
-            
-            // Efekt mrugającego światła (glitch)
-            color += mix(0.0, 0.1, step(0.99, fract(u_time * 1.0))) * glow;
-
-            gl_FragColor = vec4(color, 1.0);
-        }
-    </script>
 
     <script src="script.js"></script>
 </body>
