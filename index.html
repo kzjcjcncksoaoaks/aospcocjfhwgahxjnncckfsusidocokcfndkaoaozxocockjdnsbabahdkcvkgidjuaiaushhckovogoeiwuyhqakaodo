@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Blockman Go Promo</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar glass">
+        <div class="logo">BM Go</div>
+        <div class="controls">
+            <button id="theme-toggle" class="icon-btn"><i class="fa-solid fa-moon"></i></button>
+            <select id="lang-select">
+                <option value="ru">RU</option>
+                <option value="en">EN</option>
+                <option value="zh">CN</option>
+            </select>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="hero fade-in">
+            
+            <img src="https://placehold.co/600x300/F5A623/FFFFFF?text=Blockman+Go+Art" alt="Blockman Go" class="hero-img">
+            <h1 data-key="title">Blockman Go</h1>
+            <p class="subtitle" data-key="subtitle">Loading...</p>
+            <p class="description" data-key="desc_intro">Loading...</p>
+        </header>
+
+        <section class="features">
+            <div class="card glass fade-in-up delay-1">
+                <i class="fa-solid fa-gamepad card-icon"></i>
+                <h3 data-key="feat_minigames">Minigames</h3>
+                <p data-key="feat_minigames_desc">...</p>
+            </div>
+            <div class="card glass fade-in-up delay-2">
+                <i class="fa-solid fa-shirt card-icon"></i>
+                <h3 data-key="feat_skins">Skins</h3>
+                <p data-key="feat_skins_desc">...</p>
+            </div>
+            <div class="card glass fade-in-up delay-3">
+                <i class="fa-solid fa-comments card-icon"></i>
+                <h3 data-key="feat_chat">Chat</h3>
+                <p data-key="feat_chat_desc">...</p>
+            </div>
+            <div class="card glass fade-in-up delay-4">
+                <i class="fa-solid fa-venus-mars card-icon"></i>
+                <h3 data-key="feat_gender">Gender</h3>
+                <p data-key="feat_gender_desc">...</p>
+            </div>
+        </section>
+
+        <section class="downloads fade-in-up delay-5">
+            <h2 data-key="btn_download" class="section-title">Install</h2>
+            <div class="store-buttons">
+                <a href="#" id="link-google" class="store-btn google">
+                    <i class="fa-brands fa-google-play"></i>
+                    <span>Google Play</span>
+                </a>
+                <a href="#" id="link-apple" class="store-btn apple">
+                    <i class="fa-brands fa-apple"></i>
+                    <span>App Store</span>
+                </a>
+                <a href="#" id="link-rustore" class="store-btn rustore">
+                    <i class="fa-solid fa-cube"></i> 
+                    <span>RuStore</span>
+                </a>
+            </div>
+        </section>
+
+        <footer class="socials glass fade-in-up delay-6">
+            <p data-key="footer_join">Join Us</p>
+            <div class="social-icons">
+                <a href="#" id="soc-discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" id="soc-youtube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" id="soc-instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" id="soc-telegram"><i class="fa-brands fa-telegram"></i></a>
+                <a href="#" id="soc-tiktok"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

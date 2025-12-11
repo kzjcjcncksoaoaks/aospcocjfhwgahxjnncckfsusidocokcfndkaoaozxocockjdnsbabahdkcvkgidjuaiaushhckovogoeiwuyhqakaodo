@@ -1,0 +1,61 @@
+{
+  "links": {
+    "google": "https://play.google.com/store/apps/details?id=com.sandboxol.blockymods",
+    "apple": "https://apps.apple.com/us/app/blockman-go/id1426189000",
+    "rustore": "https://www.rustore.ru/catalog/app/com.sandboxol.blockymods.official",
+    "social": {
+      "discord": "https://discord.gg/blockmango",
+      "youtube": "https://youtube.com",
+      "instagram": "https://instagram.com",
+      "telegram": "https://t.me/blockmango",
+      "tiktok": "https://tiktok.com"
+    }
+  },
+  "translations": {
+    "ru": {
+      "title": "Blockman Go",
+      "subtitle": "Авангардная ролевая платформа",
+      "desc_intro": "Добро пожаловать в Blockman Go! Это бесплатное приложение, где вы можете отправиться в любую мини-игру вместе с друзьями!",
+      "feat_minigames": "Мини-игры",
+      "feat_minigames_desc": "Красивые текстуры, огромные карты и множество режимов ждут вас!",
+      "feat_skins": "Скины",
+      "feat_skins_desc": "Система 4D скинов: великолепные, простые или элегантные стили.",
+      "feat_chat": "Чат",
+      "feat_chat_desc": "Создавайте группы, команды и делитесь опытом с друзьями.",
+      "feat_gender": "Для всех",
+      "feat_gender_desc": "Уникальные украшения для разных полов сразу после регистрации.",
+      "btn_download": "Скачать игру",
+      "footer_join": "Присоединяйся к нам"
+    },
+    "en": {
+      "title": "Blockman Go",
+      "subtitle": "Avant-garde Role-playing Platform",
+      "desc_intro": "Welcome to Blockman Go! A free app where you can jump into any mini-game with your friends completely for free!",
+      "feat_minigames": "Mini-Games",
+      "feat_minigames_desc": "Beautiful textures, huge maps, and a variety of games await you!",
+      "feat_skins": "Custom Skins",
+      "feat_skins_desc": "4D skin decoration system. Gorgeous, simple, or elegant styles.",
+      "feat_chat": "Chat System",
+      "feat_chat_desc": "Send messages, create groups, form teams, and share your experience!",
+      "feat_gender": "For Everyone",
+      "feat_gender_desc": "Unique decorations tailored to your character's gender upon signup.",
+      "btn_download": "Download Game",
+      "footer_join": "Join Us"
+    },
+    "zh": {
+      "title": "Blockman Go",
+      "subtitle": "前卫的角色扮演平台",
+      "desc_intro": "欢迎来到 Blockman Go！这是一个免费的应用程序，您可以和朋友一起免费玩任何迷你游戏！",
+      "feat_minigames": "迷你游戏",
+      "feat_minigames_desc": "精美的纹理，巨大的地图和各种游戏等着你！",
+      "feat_skins": "个性化皮肤",
+      "feat_skins_desc": "4D皮肤装饰系统。华丽，简单或优雅的风格。",
+      "feat_chat": "聊天系统",
+      "feat_chat_desc": "发送消息，创建群组，组建团队并分享您的经验！",
+      "feat_gender": "性别装饰",
+      "feat_gender_desc": "注册后根据性别提供独特的装饰！",
+      "btn_download": "下载游戏",
+      "footer_join": "加入我们"
+    }
+  }
+}
