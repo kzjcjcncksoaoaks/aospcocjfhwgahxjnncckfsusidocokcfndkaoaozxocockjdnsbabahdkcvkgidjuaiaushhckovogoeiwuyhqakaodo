@@ -1,162 +1,127 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // === Инициализация Telegram WebApp & Variables ===
+    // === Инициализация Telegram WebApp ===
     const tg = window.Telegram.WebApp;
     tg.expand();
     tg.ready();
     
+    // Настройка цветов системного хедера
+    tg.setHeaderColor(getComputedStyle(document.body).getPropertyValue('--bg-dark').trim());
+    tg.setBackgroundColor(getComputedStyle(document.body).getPropertyValue('--bg-dark').trim());
+
+    // === Переменные ===
     let appData = null;
     let currentLang = localStorage.getItem('blockman_lang') || 'ru';
-    let isDark = localStorage.getItem('blockman_theme') !== 'light';
-    let isDesktopView = localStorage.getItem('blockman_view') === 'desktop';
+    let isDark = true;
 
-    // === WebGL Shader (Фоновая анимация) ===
-    const canvas = document.getElementById('shader-canvas');
-    const gl = canvas.getContext('webgl');
-    let program;
-    let startTime = performance.now();
-    
-    // Shader Initialization
-    function initShaders() {
-        if (!gl) return;
-        
-        const createShader = (type, sourceId) => {
-            const shader = gl.createShader(type);
-            const source = document.getElementById(sourceId).text.trim();
-            gl.shaderSource(shader, source);
-            gl.compileShader(shader);
-            return shader;
-        };
+    // === Fallback данные (если json не загрузится локально/ошибка сети) ===
+    const fallbackData = {
+        links: {
+            google: "https://play.google.com/store/apps/details?id=com.sandboxol.blockymods",
+            apple: "https://apps.apple.com/us/app/blockman-go/id1426189000",
+            rustore: "https://www.rustore.ru",
+            social: {}
+        },
+        translations: {
+            ru: { hero_title: "Blockman Go", hero_subtitle: "Ошибка загрузки", feat_1_desc: "Пожалуйста, проверьте интернет" },
+            en: { hero_title: "Blockman Go", hero_subtitle: "Load Error", feat_1_desc: "Check internet connection" },
+            zh: { hero_title: "Blockman Go", hero_subtitle: "加载错误", feat_1_desc: "检查互联网" }
+        }
+    };
 
-        const vertexShader = createShader(gl.VERTEX_SHADER, 'vertex-shader-2d');
-        const fragmentShader = createShader(gl.FRAGMENT_SHADER, 'fragment-shader-2d');
-
-        program = gl.createProgram();
-        gl.attachShader(program, vertexShader);
-        gl.attachShader(program, fragmentShader);
-        gl.linkProgram(program);
-        gl.useProgram(program);
-        
-        // Setup geometry (a simple quad)
-        const positionLocation = gl.getAttribLocation(program, "a_position");
-        const positionBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-            -1, -1, 1, -1, -1, 1,
-            -1, 1, 1, -1, 1, 1,
-        ]), gl.STATIC_DRAW);
-        gl.enableVertexAttribArray(positionLocation);
-        gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-    }
-    
-    // Shader Render Loop
-    function renderShader(time) {
-        if (!gl) return;
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        gl.viewport(0, 0, canvas.width, canvas.height);
-
-        const timeLocation = gl.getUniformLocation(program, "u_time");
-        const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
-        
-        gl.uniform1f(timeLocation, (time - startTime) * 0.001);
-        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
-        
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-        requestAnimationFrame(renderShader);
-    }
-    
-    // === Данные и Настройка ===
-    
-    const fallbackData = {/* ... резервные данные, как в прошлом ответе ... */}; 
-    
+    // === Загрузка Данных ===
     async function loadData() {
         try {
             const response = await fetch('data.json');
             if (!response.ok) throw new Error('Network response was not ok');
             appData = await response.json();
         } catch (error) {
-            console.warn('Используются резервные данные:', error);
+            console.warn('Используются резервные данные (CORS или ошибка):', error);
             appData = fallbackData;
         }
-
-        // Запуск после загрузки/таймаута
+        
+        // Скрываем лоадер и показываем контент
         setTimeout(() => {
             document.getElementById('loader').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('loader').style.display = 'none';
-                document.getElementById('app').classList.remove('hidden');
-                document.getElementById('app').classList.add('fade-in');
+                const app = document.getElementById('app');
+                app.classList.remove('hidden');
+                app.classList.add('fade-in');
             }, 500);
-        }, 800);
+        }, 1000); // Имитация загрузки для красоты
 
-        // Применяем настройки
-        applyTheme(isDark, false);
-        applyView(isDesktopView, false);
         applyContent(currentLang);
         setupLinks();
-        
-        if (!localStorage.getItem('discord_notified')) {
-            showDiscordNotification();
-        }
     }
 
-    // === 1. Управление Темами ===
-    function applyTheme(dark, animate = true) {
-        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-        document.getElementById('theme-btn').innerHTML = dark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
-        
-        // CSS Variables for Telegram
-        const color = getComputedStyle(document.body).getPropertyValue('--bg-dark').trim();
-        tg.setHeaderColor(color);
-        tg.setBackgroundColor(color);
-        localStorage.setItem('blockman_theme', dark ? 'dark' : 'light');
-    }
-    document.getElementById('theme-btn').addEventListener('click', () => {
-        isDark = !isDark;
-        applyTheme(isDark);
-        haptic();
-    });
-
-    // === 2. Управление ПК-Режимом ===
-    function applyView(desktop, animate = true) {
-        document.body.setAttribute('data-view', desktop ? 'desktop' : 'mobile');
-        localStorage.setItem('blockman_view', desktop ? 'desktop' : 'mobile');
-        document.getElementById('pc-mode-btn').querySelector('i').className = desktop ? 'fa-solid fa-mobile-screen' : 'fa-solid fa-desktop';
-        document.getElementById('pc-mode-btn').title = desktop ? 'Мобильный режим' : 'ПК-режим';
-    }
-    document.getElementById('pc-mode-btn').addEventListener('click', () => {
-        isDesktopView = !isDesktopView;
-        applyView(isDesktopView);
-        haptic();
-    });
-
-    // === 3. Обновление Контента (Плавная смена) ===
+    // === Применение контента ===
     function applyContent(lang) {
         if (!appData || !appData.translations) return;
         const t = appData.translations[lang] || appData.translations['en'];
         
-        // Ищем все элементы с data-key, независимо от их тега
-        document.querySelectorAll('[data-key]').forEach(el => {
-            const key = el.getAttribute('data-key');
-            if (t[key]) {
-                el.style.opacity = 0; // Плавное исчезновение
-                
-                // Таймер для смены текста и плавного появления
+        // Маппинг ID элементов к ключам JSON
+        const map = {
+            'hero-title': 'hero_title',
+            'hero-subtitle': 'hero_subtitle',
+            'btn-install-text': 'btn_install',
+            'sect-features-title': 'sect_features',
+            'feat-1-title': 'feat_1_title',
+            'feat-1-desc': 'feat_1_desc',
+            'feat-2-title': 'feat_2_title',
+            'feat-2-desc': 'feat_2_desc',
+            'feat-3-title': 'feat_3_title',
+            'feat-3-desc': 'feat_3_desc',
+            'footer-text': 'footer_text',
+            'loader-text': 'loading'
+        };
+
+        for (const [id, key] of Object.entries(map)) {
+            const el = document.getElementById(id);
+            if (el && t[key]) {
+                // Анимация смены текста
+                el.style.opacity = 0;
                 setTimeout(() => {
-                    // Обработка специального текста с Markdown (DC link)
-                    if (key === 'desc_discord') {
-                        el.innerHTML = t[key].replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                    } else {
-                        el.innerText = t[key];
-                    }
-                    el.style.opacity = 1; // Плавное появление
-                }, 300); 
+                    el.innerText = t[key];
+                    el.style.opacity = 1;
+                }, 200);
             }
-        });
+        }
         
         document.getElementById('current-lang').innerText = lang.toUpperCase();
     }
+
+    // === Настройка ссылок ===
+    function setupLinks() {
+        if (!appData) return;
+        const l = appData.links;
+        
+        document.getElementById('link-google').href = l.google;
+        document.getElementById('link-apple').href = l.apple;
+        document.getElementById('link-rustore').href = l.rustore;
+        
+        // Главная кнопка ведет на Google Play по умолчанию (или можно детектить ОС)
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            document.getElementById('main-download-btn').onclick = () => window.open(l.apple, '_blank');
+        } else {
+            document.getElementById('main-download-btn').onclick = () => window.open(l.google, '_blank');
+        }
+
+        const soc = l.social || {};
+        const socMap = { 'soc-discord': soc.discord, 'soc-youtube': soc.youtube, 'soc-telegram': soc.telegram, 'soc-tiktok': soc.tiktok };
+        
+        for(const [id, url] of Object.entries(socMap)) {
+            const el = document.getElementById(id);
+            if(el) {
+                if(url) el.href = url;
+                else el.style.display = 'none';
+            }
+        }
+    }
+
+    // === Обработчики событий (Interactions) ===
+    
+    // Смена языка
     document.querySelectorAll('.lang-dropdown div').forEach(item => {
         item.addEventListener('click', () => {
             currentLang = item.getAttribute('data-lang');
@@ -166,71 +131,83 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // === 4. Установка Ссылок ===
-    function setupLinks() {
-        if (!appData) return;
-        // ... (логика установки ссылок такая же, как в прошлом ответе) ...
-        const l = appData.links;
-        document.getElementById('link-google').href = l.google;
-        document.getElementById('link-apple').href = l.apple;
-        document.getElementById('link-rustore').href = l.rustore;
+    // Смена темы
+    document.getElementById('theme-btn').addEventListener('click', () => {
+        isDark = !isDark;
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        document.getElementById('theme-btn').innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
         
-        // Main button logic
-        const mainBtn = document.getElementById('main-download-btn');
-        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        const targetUrl = (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) ? l.apple : l.google;
-        mainBtn.onclick = () => { haptic('heavy'); window.open(targetUrl, '_blank'); };
-        
-        // Social links
-        document.getElementById('soc-discord').href = l.social.discord;
-        document.getElementById('soc-youtube').href = l.social.youtube;
-        document.getElementById('soc-instagram').href = l.social.instagram;
-        document.getElementById('soc-telegram').href = l.social.telegram;
-        document.getElementById('soc-tiktok').href = l.social.tiktok;
-    }
+        // Обновляем цвет хедера Telegram
+        const color = isDark ? '#0f1014' : '#f0f2f5';
+        tg.setHeaderColor(color);
+        tg.setBackgroundColor(color);
+        haptic();
+    });
 
-    // === 5. Discord Notification (Fancy) ===
-    function showDiscordNotification() {
-        const notif = document.getElementById('discord-notif');
-        
-        setTimeout(() => {
-            notif.classList.add('show');
-            haptic('medium');
-        }, 3000); // Показать через 3 секунды
-        
-        // Закрытие при клике
-        notif.addEventListener('click', (e) => {
-            if (e.target.classList.contains('close-btn')) {
-                 notif.classList.remove('show');
-            } else {
-                // Клик по самой нотификации - переход в Discord
-                window.open(appData.links.social.discord, '_blank');
-                notif.classList.remove('show');
-                localStorage.setItem('discord_notified', 'true');
-            }
-        });
-        
-        // Авто-скрытие
-        setTimeout(() => {
-            notif.classList.remove('show');
-        }, 10000);
-    }
-    
-    // === 6. Haptic Feedback (Вибрация) ===
-    function haptic(style = 'light') {
+    // Telegram Haptic Feedback (Вибрация)
+    function haptic() {
         if (tg.HapticFeedback) {
-            if (style === 'heavy') tg.HapticFeedback.impactOccurred('heavy');
-            else if (style === 'medium') tg.HapticFeedback.impactOccurred('medium');
-            else tg.HapticFeedback.impactOccurred('light');
+            tg.HapticFeedback.impactOccurred('light');
         }
     }
-    
-    document.querySelectorAll('button, a, .lang-dropdown div, .feature-card').forEach(el => {
-        el.addEventListener('touchstart', () => haptic());
+
+    // Добавляем эффект нажатия на все кнопки
+    document.querySelectorAll('button, a').forEach(btn => {
+        btn.addEventListener('touchstart', () => haptic());
     });
+
+    // === Canvas Background Animation (Particles) ===
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
     
-    // === Запуск ===
-    initShaders();
-    requestAnimationFrame(renderShader); // Запуск цикла WebGL
-    loadData(); // Загрузка данных и инициализация
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2;
+            this.speedX = (Math.random() - 0.5) * 0.5;
+            this.speedY = (Math.random() - 0.5) * 0.5;
+            this.opacity = Math.random() * 0.5;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+        draw() {
+            ctx.fillStyle = `rgba(255, 193, 7, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+        }
+        requestAnimationFrame(animateParticles);
+    }
+
+    // Запуск
+    initParticles();
+    animateParticles();
+    loadData();
 });
